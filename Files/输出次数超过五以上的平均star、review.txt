@@ -1,0 +1,59 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include  <cmath>
+using namespace std;
+
+struct sample{
+    string name;
+    string name_;
+    string a1;
+    string a2;
+
+};
+
+
+int main() {
+    sample *arr1 = new sample[100000];
+    ifstream inFile;
+    inFile.open("try.txt");
+    if (!inFile.is_open()){
+        cout << "Could not open the file " << endl;
+        cout << "Program terminating.\n";
+        exit(EXIT_FAILURE);
+    }
+    else{
+        cout<<"right.";
+    }
+    int i = 0;
+    for(;; i++) {
+        if (!inFile.eof()) {
+            getline(inFile, arr1[i].name,'\t');
+            getline(inFile,arr1[i].name_,'\t');
+            getline(inFile, arr1[i].a1,'\t');
+            getline(inFile,arr1[i].a2);
+        } else { break; }
+    }
+    long long name;
+    double total = 0;
+    int count = 0;
+    for (int j = 0;j < 20000; ++j) {
+            if(name == stoll(arr1[j].name)){
+                total += stod(arr1[j].a1);
+                count++;
+            }
+            else if(name != stoll(arr1[j].name) && j != 0){
+                if(count > 5){
+                    cout<<total/count<<endl;
+                }
+                name = stoll(arr1[j].name);
+                total = stod(arr1[j].a1);
+                count = 1;
+            }
+            else if(j == 0){
+            total += stod(arr1[j].a1);
+            count++;
+            name = stoll(arr1[0].name);
+            }
+    }
+}
